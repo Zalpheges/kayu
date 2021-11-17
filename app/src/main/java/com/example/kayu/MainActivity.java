@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.util.Pair;
@@ -31,7 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -47,11 +50,23 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    class Search {
+        Timestamp timestamp;
+        String id;
+
+        Search(Timestamp timestamp, String id) {
+            this.timestamp = timestamp;
+            this.id = id;
+        }
+    }
+
     private AppBarConfiguration appBarConfiguration;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
+
+    private ApiFood mApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful())
                     {
                         Map<String, Object> userMap = new HashMap<>();
-                        List<Pair<String, Timestamp>> history = new ArrayList<>();
+                        List<Map<String, Object>> history = new ArrayList<>();
 
                         userMap.put("uid", mUser.getUid());
                         userMap.put("history", history);
@@ -104,11 +119,77 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mApi = new ApiFood(new ApiFood.MyListener() {
+            @Override
+            public void OnComplete(boolean isSuccessful, FoodDescription foodInfo) {
+                if (isSuccessful) {
+                    mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        Map<String, Object> userMap = new HashMap<>();
+
+                                        DocumentSnapshot document = task.getResult().iterator().next();
+                                        List<Map<String, Object>> history = (List<Map<String, Object>>) document.get("history");
+
+                                        Map<String, Object> search = new HashMap<>();
+                                        search.put("id", foodInfo.id);
+                                        search.put("timestamp", Timestamp.now());
+
+                                        history.add(search);
+
+                                        userMap.put("uid", mUser.getUid());
+                                        userMap.put("history", history);
+
+                                        mFirestore.collection("Users").document(document.getId()).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful())
+                                                    Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                                else
+                                                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                }
+                else
+                    Toast.makeText(MainActivity.this, "not found", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void OnManyComplete(boolean isAllSuccessful, List<FoodDescription> listFoodInfo) {
+                if (isAllSuccessful)
+                    for (int i = 0; i < listFoodInfo.size(); i++)
+                        Toast.makeText(MainActivity.this, listFoodInfo.get(i).name, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult().iterator().next();
+                            List<Map<String, Object>> history = (List<Map<String, Object>>) document.get("history");
+
+                            String[] ids = new String[history.size()];
+
+                            for (int i = 0; i < history.size(); i++)
+                                ids[i] = history.get(i).get("id").toString();
+
+                            mApi.callMany(ids);
+                        }
+                    }
+                });
     }
 
     private void InitiateScan()
@@ -126,12 +207,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode , resultCode ,data);
         if(result != null) {
-            /*if(result.getContents() == null)
+            if(result.getContents() == null)
                 Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
             else {
-                mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).setValue(result.getContents());
-                Toast.makeText(this,"Scanned -> " + result.getContents(), Toast.LENGTH_SHORT).show();
-            }*/
+                mApi.Call(result.getContents());
+            }
         }
         else super.onActivityResult(requestCode , resultCode , data);
     }
