@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "89677015533",
+    "project_id": "kayu-3305f",
+    "storage_bucket": "kayu-3305f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89677015533:android:1066be3f2064be1728dfe4",
+        "android_client_info": {
+          "package_name": "com.example.kayu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89677015533-6o49js7k8u2o1b44cb6db5vmgq7b4dis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUBU3KqvkcfjsaVGc-B8Qb0Y-WpjatfpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89677015533-6o49js7k8u2o1b44cb6db5vmgq7b4dis.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
