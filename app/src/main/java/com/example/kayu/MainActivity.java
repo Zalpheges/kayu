@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
+        /*mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                             mApi.callMany(ids);
                         }
                     }
-                });
+                });*/
     }
 
     private void InitiateScan()
