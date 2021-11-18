@@ -3,11 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/geoff/Documents/kayu/app/src/main/res/layout/activity_capture_portrait.xml" value="0.14427083333333332" />
-        <entry key="..\:/Users/geoff/Documents/kayu/app/src/main/res/layout/activity_main.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/geoff/Documents/kayu/app/src/main/res/layout/fragment_first.xml" value="0.14427083333333332" />
-        <entry key="..\:/Users/geoff/Documents/kayu/app/src/main/res/layout/fragment_second.xml" value="0.209375" />
-        <entry key="..\:/Users/geoff/Documents/kayu/app/src/main/res/menu/menu_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/item_historique.xml" value="0.36666666666666664" />
+        <entry key="..\:/app_android/kayu/app/src/main/res/layout/fragment_first.xml" value="0.23958333333333334" />
+        <entry key="..\:/app_android/kayu/app/src/main/res/layout/fragment_second.xml" value="0.4" />
       </map>
     </option>
   </component>
