@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/thoma/Desktop/kayu/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
         <entry key="..\:/app_android/kayu/app/src/main/res/layout/fragment_first.xml" value="0.23958333333333334" />
         <entry key="..\:/app_android/kayu/app/src/main/res/layout/fragment_second.xml" value="0.4" />
       </map>

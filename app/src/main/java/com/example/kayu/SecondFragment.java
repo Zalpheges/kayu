@@ -43,12 +43,13 @@ public class SecondFragment extends Fragment {
 
     public void onReady(FoodDescription foodInfo)
     {
+
         foodDs = foodInfo;
         //Log.d("OkMec", foodDs.name);
-        TextView nT = (TextView) view.findViewById(R.id.nameText);
-        TextView sT = (TextView) view.findViewById(R.id.nutriScoreText);
-        TextView iT = (TextView) view.findViewById(R.id.ingredientsText);
-        TextView aT = (TextView) view.findViewById(R.id.allergensText);
+        TextView nT = (TextView) getView().findViewById(R.id.nameText);
+        TextView sT = (TextView) getView().findViewById(R.id.nutriScoreText);
+        TextView iT = (TextView) getView().findViewById(R.id.ingredientsText);
+        TextView aT = (TextView) getView().findViewById(R.id.allergensText);
         //Log.d("OkMec", foodDs.name);
         if(foodDs.name!=null) {
             nT.setText(foodDs.name);
