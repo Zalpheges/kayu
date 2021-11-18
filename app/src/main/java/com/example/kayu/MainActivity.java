@@ -1,5 +1,6 @@
 package com.example.kayu;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -62,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
         first = new FirstFragment();
         second = new SecondFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, first).commit();
-        //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, second,"TagName").commit();
-
         if (mUser == null) {
             mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -86,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                        onLogged();
+                        toHistory();
                     }
                     else
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-        else onLogged();
+        else toHistory();
 
         mApi = new ApiFood(new ApiFood.MyListener() {
             @Override
@@ -122,12 +121,14 @@ public class MainActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful())
-                                                    Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(MainActivity.this, "Added to history", Toast.LENGTH_SHORT).show();
                                                 else
                                                     Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
+
+                                    second.onReady(foodInfo);
                                 }
                             });
                 }
@@ -138,9 +139,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void OnManyComplete(boolean isAllSuccessful, List<FoodDescription> listFoodInfo) {
                 if (isAllSuccessful) {
-                    FirstFragment current = (FirstFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-
-                    current.onReady(listFoodInfo);
+                    first.onReady(listFoodInfo);
                 }
             }
         });
@@ -158,8 +157,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onLogged()
+    public void toHistory()
     {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, first,"TagName").commit();
+
         mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -177,6 +178,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void toSpecs(String id)
+    {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, second,"TagName").commit();
+
+        mApi.Call(id);
     }
 
     private void InitiateScan()

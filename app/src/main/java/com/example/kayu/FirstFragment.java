@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.List;
 
@@ -27,7 +26,12 @@ public class FirstFragment extends Fragment {
 
     public void onReady(List<FoodDescription> listFoodInfo)
     {
-        Toast.makeText(getActivity(), listFoodInfo.get(0).name, Toast.LENGTH_SHORT).show();
+        getView().findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).toSpecs("3502490239139");
+            }
+        });
     }
 
     @Override
