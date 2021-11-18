@@ -43,6 +43,7 @@ public class SecondFragment extends Fragment {
 
     public void onReady(FoodDescription foodInfo)
     {
+
         foodDs = foodInfo;
         TextView nT = (TextView) view.findViewById(R.id.nameText);
         TextView sT = (TextView) view.findViewById(R.id.nutriScoreText);
