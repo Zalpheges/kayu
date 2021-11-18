@@ -3,34 +3,26 @@ package com.example.kayu;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.kayu.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 
-import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.kayu.databinding.ActivityMainBinding;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,65 +31,45 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
-    class Search {
-        Timestamp timestamp;
-        String id;
-
-        Search(Timestamp timestamp, String id) {
-            this.timestamp = timestamp;
-            this.id = id;
-        }
-    }
-
     private AppBarConfiguration appBarConfiguration;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
 
-    private ApiFood mApi;
+    public ApiFood mApi;
+
+    FirstFragment first;
+    SecondFragment second;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        com.example.kayu.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InitiateScan();
-            }
-        });
+        setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mFirestore = FirebaseFirestore.getInstance();
 
+        first = new FirstFragment();
+        second = new SecondFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, first).commit();
+        //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, second,"TagName").commit();
+
         if (mUser == null) {
             mAuth.signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         Map<String, Object> userMap = new HashMap<>();
                         List<Map<String, Object>> history = new ArrayList<>();
 
@@ -113,12 +85,15 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        onLogged();
                     }
                     else
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
             });
         }
+        else onLogged();
 
         mApi = new ApiFood(new ApiFood.MyListener() {
             @Override
@@ -162,9 +137,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void OnManyComplete(boolean isAllSuccessful, List<FoodDescription> listFoodInfo) {
-                if (isAllSuccessful)
-                    for (int i = 0; i < listFoodInfo.size(); i++)
-                        Toast.makeText(MainActivity.this, listFoodInfo.get(i).name, Toast.LENGTH_SHORT).show();
+                if (isAllSuccessful) {
+                    FirstFragment current = (FirstFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+                    current.onReady(listFoodInfo);
+                }
             }
         });
     }
@@ -173,7 +150,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        /*mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InitiateScan();
+            }
+        });
+    }
+
+    public void onLogged()
+    {
+        mFirestore.collection("Users").whereEqualTo("uid", mUser.getUid()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -189,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                             mApi.callMany(ids);
                         }
                     }
-                });*/
+                });
     }
 
     private void InitiateScan()
@@ -220,16 +207,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings)
-            return true;
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
