@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nutriScore"
+        android:id="@+id/nutriScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -45,11 +45,11 @@
         android:scaleY="4"
         android:text="88"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/name"
+        app:layout_constraintStart_toEndOf="@+id/nameText"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ingredients"
+        android:id="@+id/ingredientsText"
         android:layout_width="0dp"
         android:layout_height="261dp"
         android:layout_marginTop="100dp"
@@ -62,14 +62,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="410dp"
+        android:id="@+id/allergensText"
+        android:layout_width="0dp"
         android:layout_height="262dp"
         android:layout_marginTop="20dp"
         android:text="Allergens"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredients" />
+        app:layout_constraintTop_toBottomOf="@+id/ingredientsText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,8 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
 
+        
+
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,5 +45,7 @@ public class SecondFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+
 
 }
