@@ -32,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CaptureActivity;
 
 import android.view.Menu;
 import android.widget.Toast;
@@ -195,21 +196,22 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setBeepEnabled(false);
         intentIntegrator.setCameraId(0);
         intentIntegrator.setPrompt("SCAN");
-        intentIntegrator.setBarcodeImageEnabled(false);
+        intentIntegrator.setOrientationLocked(false);
         intentIntegrator.initiateScan();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode , resultCode , data);
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode , resultCode ,data);
         if(result != null) {
             if(result.getContents() == null)
                 Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
             else {
-                mApi.Call(result.getContents());
+                toSpecs(result.getContents());
             }
         }
-        else super.onActivityResult(requestCode , resultCode , data);
     }
 
     @Override
