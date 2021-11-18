@@ -20,7 +20,7 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).toSpecs("3502490239139");
+                ((MainActivity)getActivity()).toSpecs("737628064502");
             }
         });
 

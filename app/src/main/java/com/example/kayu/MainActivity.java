@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                     second.onReady(foodInfo);
+                                    //Log.d("OkMec", foodInfo.name);
                                 }
                             });
                 }

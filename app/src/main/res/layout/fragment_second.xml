@@ -19,6 +19,7 @@
         android:id="@+id/button_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:text="@string/previous"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,12 +28,12 @@
     <TextView
         android:id="@+id/nameText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="40dp"
-        android:scaleX="3"
-        android:scaleY="3"
+        android:scaleX="1"
+        android:scaleY="1"
         android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,32 +41,36 @@
         android:id="@+id/nutriScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:scaleX="4"
-        android:scaleY="4"
+        android:layout_marginTop="5dp"
+        android:scaleX="3"
+        android:scaleY="3"
         android:text="88"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nameText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <TextView
         android:id="@+id/ingredientsText"
         android:layout_width="0dp"
         android:layout_height="261dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
         android:scaleX="1"
         android:scaleY="1"
         android:text="Ingrédients"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nutriScoreText" />
 
     <TextView
         android:id="@+id/allergensText"
         android:layout_width="0dp"
         android:layout_height="262dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="5dp"
         android:text="Allergens"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
