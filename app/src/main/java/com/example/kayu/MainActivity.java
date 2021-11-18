@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         Map<String, Object> userMap = new HashMap<>();
                         List<Map<String, Object>> history = new ArrayList<>();
 
-                        userMap.put("uid", mUser.getUid());
+                        userMap.put("uid", (mUser = mAuth.getCurrentUser()).getUid());
                         userMap.put("history", history);
 
                         mFirestore.collection("Users").add(userMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -183,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
     public void toSpecs(String id)
     {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, second,"TagName").commit();
-
         mApi.Call(id);
     }
 

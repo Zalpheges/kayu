@@ -17,6 +17,13 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
+        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).toSpecs("3502490239139");
+            }
+        });
+
         return view;
     }
 
@@ -26,12 +33,7 @@ public class FirstFragment extends Fragment {
 
     public void onReady(List<FoodDescription> listFoodInfo)
     {
-        getView().findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).toSpecs("3502490239139");
-            }
-        });
+
     }
 
     @Override
