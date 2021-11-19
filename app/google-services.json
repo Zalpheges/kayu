@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "89677015533",
-    "project_id": "kayu-3305f",
-    "storage_bucket": "kayu-3305f.appspot.com"
+    "project_number": "315787037103",
+    "project_id": "kayu-955dd",
+    "storage_bucket": "kayu-955dd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:89677015533:android:1066be3f2064be1728dfe4",
+        "mobilesdk_app_id": "1:315787037103:android:3553a6e98bee8b6c32c75a",
         "android_client_info": {
           "package_name": "com.example.kayu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "89677015533-6o49js7k8u2o1b44cb6db5vmgq7b4dis.apps.googleusercontent.com",
+          "client_id": "315787037103-83j3nl5r6phn68pkb0u9eh3nkg47b27g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDUBU3KqvkcfjsaVGc-B8Qb0Y-WpjatfpE"
+          "current_key": "AIzaSyC5lVuLQXX88FB_DBhIHBWDgYGGOWL8sUE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "89677015533-6o49js7k8u2o1b44cb6db5vmgq7b4dis.apps.googleusercontent.com",
+              "client_id": "315787037103-83j3nl5r6phn68pkb0u9eh3nkg47b27g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
