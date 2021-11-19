@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     FirstFragment first;
     SecondFragment second;
 
+    boolean save = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
+                                    if (task.isSuccessful() && save) {
+                                        save = false;
                                         Map<String, Object> userMap = new HashMap<>();
 
                                         DocumentSnapshot document = task.getResult().iterator().next();
@@ -209,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
             if(result.getContents() == null)
                 Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
             else {
+                save = true;
                 toSpecs(result.getContents());
             }
         }
