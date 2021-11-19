@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements HistoryAdapter.OnHistoryListener {
 
     private RecyclerView recyclerView;
     private List<FoodDescription> products;
@@ -23,13 +23,6 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
-        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).toSpecs("737628064502");
-            }
-        });
-
         return view;
     }
 
@@ -40,8 +33,11 @@ public class FirstFragment extends Fragment {
     public void onReady(List<FoodDescription> listFoodInfo)
     {
         this.products = listFoodInfo;
-        adapter = new HistoryAdapter(products);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new HistoryAdapter(products, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
 
@@ -50,4 +46,8 @@ public class FirstFragment extends Fragment {
         super.onDestroyView();
     }
 
+    @Override
+    public void onHistoryClick(int position) {
+        ((MainActivity)getActivity()).toSpecs(products.get(position).id);
+    }
 }
