@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 
 import retrofit2.Call;
@@ -140,7 +141,7 @@ public class ApiFood {
         JsonObject object = jsonElement.getAsJsonObject();
         foodInfo.id = GetValue("_id", object);
         foodInfo.name = GetValue("product_name", object);
-        foodInfo.nutriScore = GetValue("nutrition_grade_fr", object);
+        foodInfo.nutriScore = GetValue("nutrition_grade_fr", object).toUpperCase();
         foodInfo.quantity = GetValue("product_quantity", object);
         foodInfo.categories = GetValue("categories", object);
         foodInfo.ingredients = GetValue("ingredients_text", object);

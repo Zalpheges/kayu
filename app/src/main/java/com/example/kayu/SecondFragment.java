@@ -51,7 +51,7 @@ public class SecondFragment extends Fragment {
         TextView aT = (TextView) view.findViewById(R.id.allergensText);
         if(foodDs.name!=null) {
             nT.setText(foodDs.name);
-            sT.setText(foodDs.nutriScore);
+            sT.setText("Nutriscore : " +foodDs.nutriScore);
             iT.setText("Ingredients : " + foodDs.ingredients);
             aT.setText("Allergens : " + foodDs.allergens);
         }else{
